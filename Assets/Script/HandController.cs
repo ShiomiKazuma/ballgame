@@ -11,6 +11,7 @@ public class HandController : MonoBehaviour
     int _ballCount;
     int _next;
     GameObject _nowBall;
+    Rigidbody2D _rd;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,28 +24,37 @@ public class HandController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float x = Input.GetAxisRaw("Horizontal");
-        this.transform.position = new Vector3 (transform.position.x + (x * _speed), transform.position.y, 0);
-        if(_posLeft > transform.position.x)
-        {
-            transform.position = new Vector3(_posLeft, transform.position.y, 0);
-        }
-        if(_posRight < transform.position.x)
-        {
-            transform.position = new Vector3(_posRight, transform.position.y, 0);
-        }
+        
 
         if(Input.GetMouseButtonDown(0))
         {
-
+            //オブジェクトを発射させる
+            _rd.gravityScale = 1;
+            this.gameObject.transform.DetachChildren();
+            ChangeBall();
         }
-    } 
+    }
+
+    private void FixedUpdate()
+    {
+        float x = Input.GetAxisRaw("Horizontal");
+        this.transform.position = new Vector3(transform.position.x + (x * _speed), transform.position.y, 0);
+        if (_posLeft > transform.position.x)
+        {
+            transform.position = new Vector3(_posLeft, transform.position.y, 0);
+        }
+        if (_posRight < transform.position.x)
+        {
+            transform.position = new Vector3(_posRight, transform.position.y, 0);
+        }
+    }
 
     private void ChangeBall()
     {
         int i = Random.Range(0, 4);
         _nowBall = Instantiate(itemManager._ballObject[i], transform.position, Quaternion.identity, this.transform);
-        //_nowBall = Rigidbody2D
+        _rd = _nowBall.GetComponent<Rigidbody2D>();
+        _rd.gravityScale = 0; 
     }
 
     //private void NextBall()
