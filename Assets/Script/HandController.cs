@@ -51,15 +51,17 @@ public class HandController : MonoBehaviour
 
     private void ChangeBall()
     {
-        int i = Random.Range(0, 4);
+        int i = _next;
         _nowBall = Instantiate(itemManager._ballObject[i], transform.position, Quaternion.identity, this.transform);
         _rd = _nowBall.GetComponent<Rigidbody2D>();
         _rd.gravityScale = 0; 
+        NextBall();
     }
 
-    //private void NextBall()
-    //{
-    //    int i = Random.Range(0, 4);
-    //    _next = i;
-    //}
+    private void NextBall()
+    {
+        int i = Random.Range(0, 4);
+        _next = i;
+        Debug.Log(_next);
+    }
 }
