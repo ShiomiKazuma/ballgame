@@ -7,18 +7,18 @@ public class HandController : MonoBehaviour
     [SerializeField, Header("左側の最大値")] float _posLeft;
     [SerializeField, Header("右側の最大値")] float _posRight;
     [SerializeField] ItemManager itemManager;
+    [SerializeField] ImageManager imageManager;
     [SerializeField] float _speed = 0.1f;
-    int _ballCount;
-    int _next;
+    int _nowBallNum;
     GameObject _nowBall;
     Rigidbody2D _rd;
+    [SerializeField] GameManager _gameManager;
+
     // Start is called before the first frame update
     void Start()
     {
-        //NextBall();
-
+        //_gameManager.NextBall();
         ChangeBall();
-        
     }
 
     // Update is called once per frame
@@ -29,8 +29,11 @@ public class HandController : MonoBehaviour
         if(Input.GetMouseButtonDown(0))
         {
             //オブジェクトを発射させる
-            _rd.gravityScale = 1;
-            this.gameObject.transform.DetachChildren();
+            //_rd.gravityScale = 1;
+            //this.gameObject.transform.DetachChildren();
+            //ChangeBall();
+            Destroy(_nowBall);
+            Instantiate(itemManager._ballObject[_nowBallNum], transform.position, Quaternion.identity);
             ChangeBall();
         }
     }
@@ -51,17 +54,11 @@ public class HandController : MonoBehaviour
 
     private void ChangeBall()
     {
-        int i = _next;
-        _nowBall = Instantiate(itemManager._ballObject[i], transform.position, Quaternion.identity, this.transform);
-        _rd = _nowBall.GetComponent<Rigidbody2D>();
-        _rd.gravityScale = 0; 
-        NextBall();
+        _nowBallNum = _gameManager._nextBall;
+        _nowBall = Instantiate(imageManager._imageList[_nowBallNum], transform.position, Quaternion.identity, this.transform);
+        //_rd = _nowBall.GetComponent<Rigidbody2D>();
+        //_rd.gravityScale = 0;
+        _gameManager.NextBall();
     }
 
-    private void NextBall()
-    {
-        int i = Random.Range(0, 4);
-        _next = i;
-        Debug.Log(_next);
-    }
 }
