@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemManager : MonoBehaviour
+public class ItemManager : Singleton<ItemManager>
 {
-    [SerializeField] public GameObject[] _ballObject;
+    public GameObject[] BallObject;
+    public override void AwakeFunction()
+    {
+    }
 }

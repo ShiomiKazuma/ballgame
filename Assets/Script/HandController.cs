@@ -33,7 +33,7 @@ public class HandController : MonoBehaviour
             //this.gameObject.transform.DetachChildren();
             //ChangeBall();
             Destroy(_nowBall);
-            Instantiate(itemManager._ballObject[_nowBallNum], transform.position, Quaternion.identity);
+            Instantiate(ItemManager.Instance.BallObject[_nowBallNum], transform.position, Quaternion.identity);
             ChangeBall();
         }
     }
