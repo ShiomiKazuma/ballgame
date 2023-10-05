@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameOverZone : MonoBehaviour
 {
-    [SerializeField] Text _text;
-    private void OnCollisionEnter2D(Collision2D collision)
+    [SerializeField] GameObject _text;
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        //ゲームオーバー時の処理
-        _text.text = "Game Over";
-        
+        // ゲームオーバー時の処理
+        Text text = _text.GetComponent<Text>();
+        text.text = "Game Over";
+        _text.SetActive(true);
+        Time.timeScale = 0;
     }
 }
