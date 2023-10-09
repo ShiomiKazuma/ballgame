@@ -12,10 +12,12 @@ public class BallController : MonoBehaviour
     bool _gameOverJudge = false;
     [SerializeField] GameObject _text;
     [SerializeField] GameObject _gameOverZone;
+    ScoreManager _scoreManager;
     void Awake()
     {
         _totalNumber++;
         SelfNumber = _totalNumber;
+        _scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
     }
 
     private void Update()
@@ -42,6 +44,7 @@ public class BallController : MonoBehaviour
             if(_level == ball._level && !(_level == _levelMax))
             {
                 //２つのアイテムを破棄して中間地点にアイテムを生成
+                _scoreManager.AddScore(_level);
                 Vector3 pos;
                 pos.x = (this.transform.position.x + collision.transform.position.x) / 2;
                 pos.y = (this.transform.position.y + collision.transform.position.y) / 2;
